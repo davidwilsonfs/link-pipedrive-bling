@@ -31,7 +31,7 @@ function onError(error) {
 function onListening() {
   if (process.env.NODE_ENV !== 'test') {
     console.log(`
-    Localhost: ${chalk.magenta(`${process.env.DW_URL}`)}
+    Localhost: ${chalk.magenta(`${process.env.API_URL}`)}
     LAN: ${chalk.magenta(`http://${ip.address()}:${process.env.PORT}`)}
     ${chalk.magenta(`Press ${chalk.italic('CTRL-C')} to stop`)}
   `);
@@ -43,7 +43,6 @@ function onListening() {
  * @param {Express} app aplicação do express
  */
 export default app => {
-
   const server = http.Server(app);
   server.listen(process.env.PORT);
   server.on('error', onError);

@@ -17,8 +17,8 @@ export default app => {
       version: '1.0.0',
       description: `Demonstrating how to describe a RESTful DW with Swagger. Status da api ${process.env.SWAGGER_URL_STATS}`,
     },
-    host: `${process.env.DW_URL}`,
-    basePath: `${process.env.DW_BASE_PATH}`,
+    host: `${process.env.API_URL}`,
+    basePath: `${process.env.API_BASE_PATH}`,
     securityDefinitions: {
       UserAuth: {
         type: 'apiKey',
