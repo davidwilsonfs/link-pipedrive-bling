@@ -1,4 +1,4 @@
-class OrderBuilder {
+export class OrderBuilder {
   constructor(data) {
     this.data = data;
 
