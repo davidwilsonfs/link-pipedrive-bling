@@ -1,20 +1,29 @@
 import PipedriveClient from './pipedrive.client';
 import { OrderBuilder } from './order.builder';
-
+import * as exception from './pipedrive.exceptions';
+import { STAGE_WON } from './pipedrive.constants';
 class PipedriveService {
   async createOrder(data) {
-    const dealDetails = await PipedriveClient.getDealDetails(data.id);
-    const dealProducts = await PipedriveClient.getDealProducts(data.id);
+    try {
+      if (data.status !== STAGE_WON) {
+        exception.stageNotReached();
+      }
 
-    const builder = new OrderBuilder({
-      products: dealProducts,
-      deal_details: dealDetails,
-    });
+      const dealDetails = await PipedriveClient.getDealDetails(data.id);
+      const dealProducts = await PipedriveClient.getDealProducts(data.id);
 
-    builder.buildClient();
-    builder.buildItens();
+      const builder = new OrderBuilder({
+        products: dealProducts,
+        deal_details: dealDetails,
+      });
 
-    return builder.order;
+      builder.buildClient();
+      builder.buildItens();
+
+      return builder.order;
+    } catch (error) {
+      throw error;
+    }
   }
 }
 

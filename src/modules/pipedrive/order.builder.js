@@ -53,7 +53,7 @@ export class OrderBuilder {
           descricao: el.name,
           qtde: el.quantity,
           vlr_unit: el.item_price,
-          vlr_desconto: el.sum_no_discount - el.sum,
+          // vlr_desconto: el.sum_no_discount - el.sum,
         });
       });
     }
