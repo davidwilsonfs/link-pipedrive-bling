@@ -9,32 +9,23 @@ class PiperiveClient {
   }
 
   async getDealDetails(id) {
-    this.instance
+    return this.instance
       .get(`/deals/${id}`)
-      .then(data => {
-        console.log(data);
-        return data;
-      })
+      .then(res => res.data.data)
       .catch(err => console.log(err));
   }
 
   async getDealProducts(deal_id) {
-    this.instance
+    return this.instance
       .get(`/deals/${deal_id}/products`)
-      .then(data => {
-        console.log(data);
-        return data;
-      })
+      .then(res => res.data.data)
       .catch(err => console.log(err));
   }
 
   async getDeals() {
-    this.instance
+    return this.instance
       .get(`/deals`)
-      .then(data => {
-        console.log(data);
-        return data;
-      })
+      .then(res => res.data.data)
       .catch(err => console.log(err));
   }
 }
