@@ -1,12 +1,17 @@
 import httpStatus from 'http-status-codes';
+import PipedriveService from './pipedrive.service';
 
 export const webhookPipedrive = async (req, res, next) => {
   try {
-    const { body } = req;
+    const {
+      body: { current },
+    } = req;
 
-    console.log(body);
+    const order = await PipedriveService.createOrder(current);
 
-    res.status(httpStatus.OK).json({ body });
+    console.log(order);
+
+    res.status(httpStatus.OK).json({ order });
   } catch (e) {
     next(e);
   }

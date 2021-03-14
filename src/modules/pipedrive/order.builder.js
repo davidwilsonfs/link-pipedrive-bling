@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export class OrderBuilder {
   constructor(data) {
     this.data = data;
@@ -5,7 +7,7 @@ export class OrderBuilder {
     this.order = {
       pedido: {
         data: data.deal_details.won_time,
-        loja: data.org_id.name,
+        loja: data.deal_details.org_id.name,
         vendedor: data.deal_details.creator_user_id.name,
         numero: data.deal_details.id,
       },
@@ -17,30 +19,41 @@ export class OrderBuilder {
       pedido: {
         ...this.order,
         client: {
-          name: data.deal_details.person_id.name,
-          fone: data.deal_details.person_id.phone(el => {
-            el.primary !== 'mobile';
-          })[0].value,
-          celular: data.deal_details.person_id.phone(el => {
-            el.primary === 'mobile';
-          })[0].value,
-          email: data.deal_details.person_id.email.filter(el => {
-            el.primary === true;
-          })[0].value,
+          name: this.data.deal_details.person_id.name,
+          fone: _.isEmpty(
+            this.data.deal_details.person_id.phone.filter(el => {
+              el.label !== 'mobile';
+            })
+          )
+            ? ''
+            : this.data.deal_details.person_id.phone.filter(el => {
+                el.label === 'mobile';
+              })[0].value,
+          celular: _.isEmpty(
+            this.data.deal_details.person_id.phone.filter(el => {
+              el.label !== 'mobile';
+            })
+          )
+            ? ''
+            : this.data.deal_details.person_id.phone.filter(el => {
+                el.label === 'mobile';
+              })[0].value,
+          email: this.data.deal_details.person_id.email.filter(el => el.primary)[0].value,
         },
       },
     };
   }
 
   buildItens() {
-    if (_.isEmpty(data.products)) {
+    if (!_.isEmpty(this.data.products)) {
       this.order = {
         pedido: {
           ...this.order,
           itens: [],
         },
       };
-      data.products.forEach(el => {
+
+      this.data.products.forEach(el => {
         this.order.pedido.itens.push({
           codigo: el.id,
           descricao: el.name,
