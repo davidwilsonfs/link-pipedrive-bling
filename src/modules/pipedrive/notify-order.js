@@ -8,11 +8,14 @@ export class NotifyOrder {
     });
   }
 
-  notifyToBling(data) {
+  notifyToBling() {
+    console.log(this.data);
     this.instance
-      .post('/pedido/json/', {
-        xml: data,
-        apikey: 'b929c70dcc2edc78869a42e1acb535ac4efa11ec0e94960b7e51558e89266111de20fd05',
+      .post('/pedido/json/', null, {
+        params: {
+          xml: this.data,
+          apikey: 'b929c70dcc2edc78869a42e1acb535ac4efa11ec0e94960b7e51558e89266111de20fd05',
+        },
       })
       .then(res => {
         console.log(res.data);

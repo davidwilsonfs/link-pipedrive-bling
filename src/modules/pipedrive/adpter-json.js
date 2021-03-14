@@ -2,7 +2,6 @@ import { parse } from 'js2xmlparser';
 
 export class AdapterJson {
   constructor() {
-    console.log(parse);
     this.parser = parse;
   }
 

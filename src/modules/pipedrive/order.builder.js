@@ -5,10 +5,10 @@ export class OrderBuilder {
     this.data = data;
 
     this.order = {
-      data: data.deal_details.won_time,
+      // data: data.deal_details.won_time,
       loja: data.deal_details.org_id.name,
       vendedor: data.deal_details.creator_user_id.name,
-      numero: data.deal_details.id,
+      numero: `${data.deal_details.id}`,
     };
   }
 
@@ -17,25 +17,25 @@ export class OrderBuilder {
       ...this.order,
       cliente: {
         name: this.data.deal_details.person_id.name,
-        fone: _.isEmpty(
-          this.data.deal_details.person_id.phone.filter(el => {
-            el.label !== 'mobile';
-          })
-        )
-          ? ''
-          : this.data.deal_details.person_id.phone.filter(el => {
-              el.label === 'mobile';
-            })[0].value,
-        celular: _.isEmpty(
-          this.data.deal_details.person_id.phone.filter(el => {
-            el.label !== 'mobile';
-          })
-        )
-          ? ''
-          : this.data.deal_details.person_id.phone.filter(el => {
-              el.label === 'mobile';
-            })[0].value,
-        email: this.data.deal_details.person_id.email.filter(el => el.primary)[0].value,
+        // fone: _.isEmpty(
+        //   this.data.deal_details.person_id.phone.filter(el => {
+        //     el.label !== 'mobile';
+        //   })
+        // )
+        //   ? ''
+        //   : this.data.deal_details.person_id.phone.filter(el => {
+        //       el.label === 'mobile';
+        //     })[0].value,
+        // celular: _.isEmpty(
+        //   this.data.deal_details.person_id.phone.filter(el => {
+        //     el.label !== 'mobile';
+        //   })
+        // )
+        //   ? ''
+        //   : this.data.deal_details.person_id.phone.filter(el => {
+        //       el.label === 'mobile';
+        //     })[0].value,
+        // email: this.data.deal_details.person_id.email.filter(el => el.primary)[0].value,
       },
     };
   }
@@ -44,12 +44,14 @@ export class OrderBuilder {
     if (!_.isEmpty(this.data.products)) {
       this.order = {
         ...this.order,
-        itens: [],
+        itens: {
+          item: [],
+        },
       };
 
       this.data.products.forEach(el => {
-        this.order.itens.push({
-          codigo: el.id,
+        this.order.itens.item.push({
+          codigo: `${el.id}`,
           descricao: el.name,
           qtde: el.quantity,
           vlr_unit: el.item_price,
