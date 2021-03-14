@@ -26,6 +26,12 @@ export default app => {
         name: 'Authorization',
         in: 'header',
       },
+      BasicAuth: {
+        type: 'basic',
+        description: 'Pipedrive auth',
+        name: 'Authorization',
+        in: 'header',
+      },
     },
   };
 

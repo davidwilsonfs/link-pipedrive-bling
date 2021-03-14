@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import * as pipedriveController from './pipedrive.controller';
-
+import { basicAuthentication } from '../../core/security/auth-strategy.security';
 const pipedriveRouter = Router();
 
 /**
@@ -11,6 +11,8 @@ const pipedriveRouter = Router();
  *       - Pipedrive
  *     summary: teste
  *     description: teste
+ *     security:
+ *       - BasicAuth: []
  *     parameters:
  *       - name: pipedrive
  *         description: pipedrive object
@@ -25,7 +27,7 @@ const pipedriveRouter = Router();
  *       400:
  *         description: Bad Request
  */
-pipedriveRouter.post('/', pipedriveController.webhookPipedrive);
+pipedriveRouter.post('/', basicAuthentication, pipedriveController.webhookPipedrive);
 
 /**
  * @swagger
