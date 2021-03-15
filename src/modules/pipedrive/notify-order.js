@@ -1,8 +1,11 @@
 import axios from 'axios';
 
+import PipedriveService from './pipedrive.service';
+
 export class NotifyOrder {
-  constructor(data) {
+  constructor(data, orderStore) {
     this.data = data;
+    this.store = orderStore;
     this.instance = axios.create({
       baseURL: 'https://bling.com.br/Api/v2',
     });
@@ -17,10 +20,14 @@ export class NotifyOrder {
         },
       })
       .then(res => {
-        console.log(res.data);
+        if (!res.data.retorno.erros) {
+          PipedriveService.registeOrder(this.store);
+        } else {
+          console.log(res.data.retorno.erros);
+        }
       })
       .catch(err => {
-        console.log(err);
+        console.log(err.retorno.erros);
       });
   }
 }

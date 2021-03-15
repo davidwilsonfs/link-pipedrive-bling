@@ -15,6 +15,7 @@ export const orderMount = ({ deal_details }) => {
       //   ,
       // },
     },
+    status: deal_details.status,
     products_count: deal_details.products_count,
     value: deal_details.value,
   };

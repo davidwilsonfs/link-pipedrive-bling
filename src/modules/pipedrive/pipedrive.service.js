@@ -12,8 +12,8 @@ class PipedriveService {
         exception.stageNotReached();
       }
 
-      const dealDetails = await PipedriveClient.getDealDetails(data.id);
-      const dealProducts = await PipedriveClient.getDealProducts(data.id);
+      const { data: dealDetails } = await PipedriveClient.getDealDetails(data.id);
+      const { data: dealProducts } = await PipedriveClient.getDealProducts(data.id);
 
       const payload = {
         products: dealProducts,
@@ -25,10 +25,15 @@ class PipedriveService {
       builder.buildClient();
       builder.buildItens();
 
-      console.log(orderMount(payload));
-      await repository.register(orderMount(payload));
+      return { orderBling: builder.order, orderStore: orderMount(payload) };
+    } catch (error) {
+      throw error;
+    }
+  }
 
-      return builder.order;
+  async registeOrder(order) {
+    try {
+      await repository.register(order);
     } catch (error) {
       throw error;
     }

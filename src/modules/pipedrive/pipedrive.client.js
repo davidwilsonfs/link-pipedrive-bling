@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-class PiperiveClient {
+class PipedriveClient {
   constructor() {
     this.instance = axios.create({
       baseURL: 'https://teste3.pipedrive.com/api/v1',
@@ -11,23 +11,31 @@ class PiperiveClient {
   async getDealDetails(id) {
     return this.instance
       .get(`/deals/${id}`)
-      .then(res => res.data.data)
+      .then(res => ({ ...res.data }))
       .catch(err => console.log(err));
   }
 
-  async getDealProducts(deal_id) {
+  async getDealProducts(deal_id, start = 0) {
     return this.instance
-      .get(`/deals/${deal_id}/products`)
-      .then(res => res.data.data)
+      .get(`/deals/${deal_id}/products`, {
+        params: {
+          start: start,
+        },
+      })
+      .then(res => ({ ...res.data }))
       .catch(err => console.log(err));
   }
 
-  async getDeals() {
+  async getDeals(start = 0) {
     return this.instance
-      .get(`/deals`)
-      .then(res => res.data.data)
+      .get(`/deals`, {
+        params: {
+          start: start,
+        },
+      })
+      .then(res => ({ ...res.data }))
       .catch(err => console.log(err));
   }
 }
 
-export default new PiperiveClient();
+export default new PipedriveClient();

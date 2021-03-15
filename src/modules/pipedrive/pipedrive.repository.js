@@ -8,3 +8,12 @@ export const register = async data => {
     throw e;
   }
 };
+
+export const getById = async id => {
+  try {
+    return Order.findOne({ order_id: id });
+  } catch (e) {
+    throw e;
+  }
+};
+
