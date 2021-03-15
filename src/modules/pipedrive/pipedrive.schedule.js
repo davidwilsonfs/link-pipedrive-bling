@@ -1,5 +1,5 @@
 import { Schedules } from '../../core/schedules/schedule';
-import { requestLimiter, promiseHandler } from '../../core/utils/utils';
+import managerMultipleRequest from '../../core/utils/manage-multiple-request';
 import pipedriveClient from '../../core/clients-http/pipedrive.client';
 import pipedriveService from './pipedrive.service';
 import { ParserJson } from './helpers/parser-json';
@@ -21,29 +21,33 @@ export class PipedriveSchedule extends Schedules {
     try {
       const { deals } = await pipedriveClient.getDeals();
 
-      const extractOrderlimiter = requestLimiter(5, 100, pipedriveService.extractOrder);
-
-      const dealsPopulated = await Promise.all(
-        deals.map(deal => promiseHandler(extractOrderlimiter(deal)))
+      const extractOrderlimiter = managerMultipleRequest.requestLimiter(
+        5,
+        100,
+        pipedriveService.extractOrder
       );
 
-      const ordersXml = dealsPopulated
+      const orders = await Promise.all(
+        deals.map(deal => managerMultipleRequest.promiseHandler(extractOrderlimiter(deal)))
+      );
+
+      const ordersMaped = orders
         .filter(({ success }) => success)
         .map(({ _, result: { orderBling, orderMongo } }) => {
           return { orderBling: new ParserJson().convertToXml(orderBling), orderMongo };
         });
 
-      ordersXml.forEach(({ orderBling, orderMongo }) =>
+      ordersMaped.forEach(({ orderBling, orderMongo }) =>
         new PipedriveNotifier(orderBling)
           .notifyOrderToBling()
           .then(() => orderService.registeOrder(orderMongo))
           .then(() => {
             console.log('ORDER SENDED SUCCESSFULLY');
           })
-          .catch(error => console.log(error.code))
+          .catch(error => console.log(error.message))
       );
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   }
 }

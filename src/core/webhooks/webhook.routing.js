@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import pipedriveWebhooks from '../../modules/pipedrive/pipedrive.webhooks';
-import { basicAuthentication } from '../security/auth-strategy.security';
+import authentication from '../security/auth-strategy.security';
 const webhooksRouters = Router();
 
 /**
@@ -28,7 +28,11 @@ const webhooksRouters = Router();
  *       400:
  *         description: Bad Request
  */
-webhooksRouters.post('/pipedrive/deals', basicAuthentication, pipedriveWebhooks.dealsEventHandler);
+webhooksRouters.post(
+  '/pipedrive/deals',
+  authentication.basicAuthentication,
+  pipedriveWebhooks.dealsEventHandler
+);
 
 /**
  * @swagger

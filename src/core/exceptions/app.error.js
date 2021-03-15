@@ -10,6 +10,7 @@ function AppError(error, statusCode) {
   this.name = error.name || this.constructor.name;
   this.message =
     error.message ||
+    error.code ||
     error ||
     httpStatus.getStatusText(httpStatus.INTERNAL_SERVER_ERROR);
   this.statusCode = statusCode || httpStatus.INTERNAL_SERVER_ERROR;

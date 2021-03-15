@@ -7,18 +7,14 @@ function Handler() {
 
 const errorHandler = (err, req, res, next) => {
   const handler = new Handler();
+
   handler.error(err);
 
-  const statusCode = err.statusCode
-    ? err.statusCode
-    : httpStatus.INTERNAL_SERVER_ERROR;
+  const statusCode = err.statusCode ? err.statusCode : httpStatus.INTERNAL_SERVER_ERROR;
 
   const body = {
     error: err.name ? err.name : 'Exception',
-    message:
-      err.message ||
-      err ||
-      httpStatus.getStatusText(httpStatus.INTERNAL_SERVER_ERROR),
+    message: err.message || err || httpStatus.getStatusText(httpStatus.INTERNAL_SERVER_ERROR),
   };
   res.status(statusCode).json(body);
 };
