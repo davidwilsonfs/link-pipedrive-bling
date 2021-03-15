@@ -10,10 +10,7 @@ class PipedriveService {
     try {
       const existData = await repository.getById(data.id);
 
-      if (existData && data.status !== STAGE_WON) {
-        await repository.update(existData.id, { status: data.status });
-        exception.stageUpdated();
-      } else if (data.status !== STAGE_WON || (existData && existData.status === STAGE_WON)) {
+      if (data.status !== STAGE_WON || existData) {
         exception.stageNotReached();
       }
 
@@ -33,7 +30,6 @@ class PipedriveService {
       return {
         orderBling: builder.order,
         orderStore: orderMount(payload),
-        isUpdate: existData && existData.status !== STAGE_WON,
       };
     } catch (error) {
       throw error;

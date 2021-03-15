@@ -28,12 +28,12 @@ export class PipedriveSchedule extends Schedules {
 
       const ordersXml = dealsPopulated
         .filter(({ success }) => success)
-        .map(({ _, result: { orderBling, orderStore, isUpdate } }) => {
-          return { orderBling: new AdapterJson().convertToXml(orderBling), orderStore, isUpdate };
+        .map(({ _, result: { orderBling, orderStore } }) => {
+          return { orderBling: new AdapterJson().convertToXml(orderBling), orderStore };
         });
 
-      ordersXml.forEach(({ orderBling, orderStore, isUpdate }) =>
-        new NotifyOrder(orderBling, orderStore, isUpdate).notifyToBling()
+      ordersXml.forEach(({ orderBling, orderStore }) =>
+        new NotifyOrder(orderBling, orderStore).notifyToBling()
       );
     } catch (error) {
       console.log(error);

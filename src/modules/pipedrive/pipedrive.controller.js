@@ -9,10 +9,10 @@ export const webhookPipedrive = async (req, res, next) => {
       body: { current },
     } = req;
 
-    const { orderBling, orderStore, isUpdate } = await PipedriveService.createOrder(current);
+    const { orderBling, orderStore } = await PipedriveService.createOrder(current);
     const orderXml = new AdapterJson().convertToXml(orderBling);
 
-    new NotifyOrder(orderXml, orderStore, isUpdate).notifyToBling();
+    new NotifyOrder(orderXml, orderStore).notifyToBling();
 
     res.status(httpStatus.OK).json({ orderStore });
   } catch (e) {

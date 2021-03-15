@@ -2,10 +2,9 @@ import blingClient from '../../core/clients-http/bling.client';
 import PipedriveService from './pipedrive.service';
 
 export class NotifyOrder {
-  constructor(data, orderStore, isUpdate) {
+  constructor(data, orderStore) {
     this.data = data;
     this.store = orderStore;
-    this.isUpdate = isUpdate;
   }
 
   notifyToBling() {
