@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-export class OrderBuilder {
+export class OrderBlingBuilder {
   constructor(data) {
     this.data = data;
     this.order = {};

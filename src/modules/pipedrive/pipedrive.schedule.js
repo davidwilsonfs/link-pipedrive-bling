@@ -1,9 +1,9 @@
-import { Schedules } from './schedule';
+import { Schedules } from '../../core/schedules/schedule';
 import { requestLimiter, promiseHandler } from '../../core/utils/utils';
 import pipedriveClient from '../../core/clients-http/pipedrive.client';
-import pipedriveService from '../../modules/pipedrive/pipedrive.service';
-import { AdapterJson } from '../../modules/pipedrive/helpers/adpter-json';
-import { NotifyOrder } from '../../modules/pipedrive/notify-order';
+import pipedriveService from './pipedrive.service';
+import { AdapterJson } from './helpers/parser-json';
+import { NotifyOrder } from './pipedrive.notifier';
 
 export class PipedriveSchedule extends Schedules {
   constructor() {

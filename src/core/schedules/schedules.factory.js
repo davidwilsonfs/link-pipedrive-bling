@@ -1,4 +1,4 @@
-import { PipedriveSchedule } from './pipedrive.schedule';
+import { PipedriveSchedule } from '../../modules/pipedrive/pipedrive.schedule';
 
 class SchedulesFactory {
   constructor() {}

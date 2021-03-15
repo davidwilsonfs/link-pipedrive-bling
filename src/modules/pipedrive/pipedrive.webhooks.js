@@ -1,6 +1,7 @@
 import httpStatus from 'http-status-codes';
-import { AdapterJson } from './helpers/adpter-json';
-import { NotifyOrder } from './notify-order';
+import orderService from '../order/order.service';
+import { ParserJson } from './helpers/parser-json';
+import { PipedriveNotifier } from './pipedrive.notifier';
 import PipedriveService from './pipedrive.service';
 
 class PipedriveWebhooks {
@@ -10,12 +11,15 @@ class PipedriveWebhooks {
         body: { current },
       } = req;
 
-      const { orderBling, orderStore } = await PipedriveService.createOrder(current);
-      const orderXml = new AdapterJson().convertToXml(orderBling);
+      const { orderBling, orderMongo } = await PipedriveService.extractOrder(current);
 
-      new NotifyOrder(orderXml, orderStore).notifyToBling();
+      const orderXml = new ParserJson().convertToXml(orderBling);
 
-      res.status(httpStatus.OK).json({ orderStore });
+      await new PipedriveNotifier(orderXml).notifyToBling();
+
+      await orderService.registeOrder(orderMongo);
+
+      res.status(httpStatus.OK).json({ order: orderMongo });
     } catch (e) {
       next(e);
     }

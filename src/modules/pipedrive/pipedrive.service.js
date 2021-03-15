@@ -1,12 +1,12 @@
-import { OrderBuilder } from './helpers/order.builder';
 import * as exception from './pipedrive.exceptions';
 import { STAGE_WON } from './pipedrive.constants';
-import { orderMount } from './helpers/order-mount';
+import { orderMount } from './helpers/order-mongo.builder';
 import pipedriveClient from '../../core/clients-http/pipedrive.client';
 import orderRepository from '../order/order.repository';
+import { OrderBlingBuilder } from './helpers/order-bling.builder';
 
 class PipedriveService {
-  async createOrder(data) {
+  async extractOrder(data) {
     try {
       const existData = await orderRepository.getById(data.id);
 
@@ -22,15 +22,19 @@ class PipedriveService {
         deal_details: dealDetails,
       };
 
-      const builder = new OrderBuilder(payload);
+      const orderBuilderBling = new OrderBlingBuilder(payload);
 
-      builder.buildOrder();
-      builder.buildClient();
-      builder.buildItens();
+      orderBuilderBling.buildOrder();
+      orderBuilderBling.buildClient();
+      orderBuilderBling.buildItens();
+
+      const orderBuilderMongo = new OrderBlingBuilder(payload);
+
+      orderBuilderMongo.buildOrder();
 
       return {
-        orderBling: builder.order,
-        orderStore: orderMount(payload),
+        orderBling: orderBuilderBling.order,
+        orderMongo: orderBuilderMongo.order,
       };
     } catch (error) {
       throw error;
