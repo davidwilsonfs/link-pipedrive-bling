@@ -62,6 +62,11 @@ Para poder receber os eventos via websocket, sugiro instalar o `ngrok` para pemi
 - ENDPOINT_URL: Inserir a url gerada pelo `ngrok` e complementar com o endpoint `/api/webhooks/pipedrive/deals`
 - HTTP Auth username e password: Utilizar os valores contidos nas variaveis de ambiente `BASIC_AUTH_USERNAME` e `BASIC_AUTH_PASSWORD`
 
+## Obtencao das API KEYS do Bling e do Pipedrive
+
+- [[FIND API KEY PIPEDRIVE]](https://pipedrive.readme.io/docs/how-to-find-the-api-token)
+- [[FIND API KEY BLING]](https://ajuda.bling.com.br/hc/pt-br/articles/360046937853-Introdu%C3%A7%C3%A3o-para-a-API-do-Bling-para-desenvolvedores-)
+
 # Documentation da API
 
 Para acessar a documentação do swagger, acessar `http://localhost:<PORT>`. Para acessar o swagger status, para obter informações sobre a "saúde" da sua aplicação REST, acessar `http://localhost:<PORT>/<SWAGGER_URL_STATS>`
