@@ -9,7 +9,6 @@ export class NotifyOrder {
   }
 
   notifyToBling() {
-    console.log(this.data);
     this.instance
       .post('/pedido/json/', null, {
         params: {
