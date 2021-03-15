@@ -3,7 +3,7 @@ import { dataCollector } from './pipedrive.datalayer';
 
 const startJobCron = () => {
   new CronJob(
-    `*/40 * * * * *`, // A cada 1 minuto
+    `*/10 * * * * *`, // A cada 1 minuto
     async () => {
       console.log('Scheduller work to collect pipedrive orders');
       dataCollector();

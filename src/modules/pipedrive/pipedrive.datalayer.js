@@ -1,14 +1,12 @@
-import { PipedriveLayer } from './pipedrive.layer';
 import PipedriveService from './pipedrive.service';
 import { AdapterJson } from './adpter-json';
 import { NotifyOrder } from './notify-order';
 import { requestLimiter, promiseHandler } from '../../core/utils/utils';
+import pipedriveClient from '../../core/clients-http/pipedrive.client';
 
 async function dataCollector() {
   try {
-    const pipedriveLayer = new PipedriveLayer();
-
-    const { deals } = await pipedriveLayer.getDeals();
+    const { deals } = await pipedriveClient.getDeals();
 
     const createOrderlimiter = requestLimiter(5, 100, PipedriveService.createOrder);
 

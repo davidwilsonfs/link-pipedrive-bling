@@ -20,7 +20,7 @@ const server = InitServer(app);
 initializerLogger(app);
 InitSwagger(app);
 InitDatabase();
-// startSystem();
+startSystem();
 
 ConfigApiRoutes(app);
 ConfigErrorHandler(app);
