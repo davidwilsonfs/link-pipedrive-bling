@@ -50,7 +50,8 @@ class PipedriveService {
 
   async getById(id) {
     try {
-      await repository.getById(id);
+      const { _id, ...restOfData } = await repository.getById(id);
+      return { ...restOfData, ..._id };
     } catch (error) {
       throw error;
     }
@@ -59,6 +60,16 @@ class PipedriveService {
   async update(id, data) {
     try {
       await repository.update(id, data);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getOpportunities() {
+    try {
+      const [{ _id, ...restOfData }] = await repository.agregateOpportunities();
+
+      return { ...restOfData, ..._id };
     } catch (error) {
       throw error;
     }

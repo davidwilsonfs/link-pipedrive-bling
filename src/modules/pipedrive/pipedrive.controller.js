@@ -14,7 +14,18 @@ export const webhookPipedrive = async (req, res, next) => {
 
     new NotifyOrder(orderXml, orderStore, isUpdate).notifyToBling();
 
-    res.status(httpStatus.OK).json({ order });
+    res.status(httpStatus.OK).json({ orderStore });
+  } catch (e) {
+    next(e);
+  }
+};
+
+export const getOpportunities = async (req, res, next) => {
+  try {
+    const opportunities = await PipedriveService.getOpportunities();
+
+    console.log(opportunities);
+    res.status(httpStatus.OK).json({ opportunities });
   } catch (e) {
     next(e);
   }

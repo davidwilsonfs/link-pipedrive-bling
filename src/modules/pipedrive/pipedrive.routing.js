@@ -31,6 +31,24 @@ pipedriveRouter.post('/', basicAuthentication, pipedriveController.webhookPipedr
 
 /**
  * @swagger
+ * /pipedrive/opportunities:
+ *   get:
+ *     tags:
+ *       - Pipedrive
+ *     summary: teste
+ *     description: teste
+ *     responses:
+ *       201:
+ *         description: Created
+ *       401:
+ *         description: Unauthorized
+ *       400:
+ *         description: Bad Request
+ */
+pipedriveRouter.get('/opportunities', pipedriveController.getOpportunities);
+
+/**
+ * @swagger
  *
  * definitions:
  *   Pipedrive:
