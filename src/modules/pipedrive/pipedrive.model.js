@@ -3,9 +3,10 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const OrderSchema = new Schema({
-  oder_id: {
+  order_id: {
     type: Number,
     required: true,
+    unique: true,
   },
   currency: {
     type: String,
@@ -40,11 +41,6 @@ const OrderSchema = new Schema({
   value: {
     type: Number,
     required: true,
-  },
-  created_at: {
-    type: Date,
-    required: true,
-    default: Date.now,
   },
   created_at: {
     type: Date,

@@ -1,6 +1,6 @@
 export const orderMount = ({ deal_details }) => {
   return {
-    oder_id: deal_details.id,
+    order_id: deal_details.id,
     currency: deal_details.currency,
     seller: {
       name: deal_details.creator_user_id.name,
@@ -17,10 +17,5 @@ export const orderMount = ({ deal_details }) => {
     },
     products_count: deal_details.products_count,
     value: deal_details.value,
-    created_at: {
-      type: Date,
-      required: true,
-      default: Date.now,
-    },
   };
 };
