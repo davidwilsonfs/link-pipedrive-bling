@@ -9,7 +9,7 @@ import orderService from '../order/order.service';
 export class PipedriveSchedule extends Schedules {
   constructor() {
     super();
-    this.cron = `*/10 * * * * *`;
+    this.cron = `*/40 * * * * *`;
     this.messageSchedulle = "Scheduller work to collect pipedrive orders'";
   }
 
@@ -37,15 +37,15 @@ export class PipedriveSchedule extends Schedules {
           return { orderBling: new ParserJson().convertToXml(orderBling), orderMongo };
         });
 
-      ordersMaped.forEach(({ orderBling, orderMongo }) =>
+      ordersMaped.forEach(({ orderBling, orderMongo }) => {
         new PipedriveNotifier(orderBling)
           .notifyOrderToBling()
           .then(() => orderService.registeOrder(orderMongo))
           .then(() => {
             console.log('ORDER SENDED SUCCESSFULLY');
           })
-          .catch(error => console.log(error.message))
-      );
+          .catch(error => console.log(error.message));
+      });
     } catch (error) {
       console.log(error.message);
     }

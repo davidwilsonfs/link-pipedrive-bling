@@ -15,7 +15,7 @@ class PipedriveWebhooks {
 
       const orderXml = new ParserJson().convertToXml(orderBling);
 
-      await new PipedriveNotifier(orderXml).notifyToBling();
+      await new PipedriveNotifier(orderXml).notifyOrderToBling();
 
       await orderService.registeOrder(orderMongo);
 

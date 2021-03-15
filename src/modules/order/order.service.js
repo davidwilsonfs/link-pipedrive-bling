@@ -1,33 +1,28 @@
-import * as repository from './order.repository';
+import orderRepository from './order.repository';
 
 class OrderService {
   async registeOrder(order) {
     try {
-      await repository.register(order);
+      await orderRepository.register(order);
     } catch (error) {
       throw error;
     }
   }
+
   async getByOrderId(order) {
     try {
-      const { _id, ...restOfData } = await repository.getByOrderId(order);
+      const { _id, ...restOfData } = await orderRepository.getByOrderId(order);
       return { ...restOfData, ..._id };
     } catch (error) {
       throw error;
     }
   }
 
-  async update(id, data) {
-    try {
-      await repository.update(id, data);
-    } catch (error) {
-      throw error;
-    }
-  }
+  getAllOrders() {}
 
   async getOpportunities() {
     try {
-      const [{ _id, ...restOfData }] = await repository.agregateOpportunities();
+      const [{ _id, ...restOfData }] = await orderRepository.agregateOpportunities();
 
       return { ...restOfData, ..._id };
     } catch (error) {

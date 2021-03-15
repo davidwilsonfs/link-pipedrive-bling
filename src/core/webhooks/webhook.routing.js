@@ -13,7 +13,6 @@ const webhooksRouters = Router();
  *     description: handle event deals from pipedrive through you webhook
  *     security:
  *       - BasicAuth: []
- *
  *     parameters:
  *       - name: deal
  *         description: deal object

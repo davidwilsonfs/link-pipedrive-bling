@@ -9,7 +9,6 @@ export class OrderBlingBuilder {
   buildOrder() {
     this.order = {
       ...this.order,
-      // data: this.data.deal_details.won_time,
       loja: this.data.deal_details.org_id.name,
       vendedor: this.data.deal_details.creator_user_id.name,
       numero: `${this.data.deal_details.id}`,
@@ -21,25 +20,9 @@ export class OrderBlingBuilder {
       ...this.order,
       cliente: {
         nome: this.data.deal_details.person_id.name,
-        fone: _.isEmpty(
-          this.data.deal_details.person_id.phone.filter(el => {
-            el.label !== 'mobile';
-          })
-        )
-          ? ''
-          : this.data.deal_details.person_id.phone.filter(el => {
-              el.label === 'mobile';
-            })[0].value,
-        celular: _.isEmpty(
-          this.data.deal_details.person_id.phone.filter(el => {
-            el.label !== 'mobile';
-          })
-        )
-          ? ''
-          : this.data.deal_details.person_id.phone.filter(el => {
-              el.label === 'mobile';
-            })[0].value,
-        email: this.data.deal_details.person_id.email.filter(el => el.primary)[0].value,
+        fone: _.isEmpty(this._getPhone()) ? '' : this._getPhone()[0].value,
+        celular: _.isEmpty(this._getCellPhone()) ? '' : this._getCellPhone()[0].value,
+        email: this._getEmail(),
       },
     };
   }
@@ -62,5 +45,20 @@ export class OrderBlingBuilder {
         });
       });
     }
+  }
+
+  _getCellPhone() {
+    return this.data.deal_details.person_id.phone.filter(el => {
+      el.label === 'mobile';
+    });
+  }
+
+  _getPhone() {
+    return this.data.deal_details.person_id.phone.filter(el => {
+      el.label !== 'mobile';
+    });
+  }
+  _getEmail() {
+    return this.data.deal_details.person_id.email.filter(el => el.primary)[0].value;
   }
 }

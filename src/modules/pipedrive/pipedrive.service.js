@@ -3,6 +3,7 @@ import { STAGE_WON } from './pipedrive.constants';
 import pipedriveClient from '../../core/clients-http/pipedrive.client';
 import orderRepository from '../order/order.repository';
 import { OrderBlingBuilder } from './helpers/order-bling.builder';
+import { OrderMongoBuilder } from './helpers/order-mongo.builder';
 
 class PipedriveService {
   async extractOrder(data) {
@@ -26,7 +27,7 @@ class PipedriveService {
       orderBuilderBling.buildClient();
       orderBuilderBling.buildItens();
 
-      const orderBuilderMongo = new OrderBlingBuilder(payload);
+      const orderBuilderMongo = new OrderMongoBuilder(payload);
 
       orderBuilderMongo.buildOrder();
 

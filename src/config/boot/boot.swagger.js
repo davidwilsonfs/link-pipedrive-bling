@@ -20,12 +20,6 @@ export default app => {
     host: `${process.env.API_URL}`,
     basePath: `${process.env.API_BASE_PATH}`,
     securityDefinitions: {
-      UserAuth: {
-        type: 'apiKey',
-        description: 'Api Link Authorization',
-        name: 'Authorization',
-        in: 'header',
-      },
       BasicAuth: {
         type: 'basic',
         description: 'Pipedrive auth',

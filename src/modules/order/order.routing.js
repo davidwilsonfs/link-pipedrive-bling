@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import orderController from './order.controller';
+import authentication from '../../core/security/auth-strategy.security';
 const ordersRouter = Router();
 
 /**
@@ -8,8 +9,10 @@ const ordersRouter = Router();
  *   get:
  *     tags:
  *       - Orders
- *     summary: teste
- *     description: teste
+ *     summary: aggregates the opportunities inserted in Bling by day and total value
+ *     description: aggregates the opportunities inserted in Bling by day and total value
+ *     security:
+ *       - BasicAuth: []
  *     responses:
  *       201:
  *         description: Created
@@ -18,6 +21,10 @@ const ordersRouter = Router();
  *       400:
  *         description: Bad Request
  */
-ordersRouter.get('/opportunities', orderController.getOpportunities);
+ordersRouter.get(
+  '/opportunities',
+  authentication.basicAuthentication,
+  orderController.getOpportunities
+);
 
 export default ordersRouter;
