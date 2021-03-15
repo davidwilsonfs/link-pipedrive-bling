@@ -1,14 +1,14 @@
-import { OrderBuilder } from './order.builder';
+import { OrderBuilder } from './helpers/order.builder';
 import * as exception from './pipedrive.exceptions';
 import { STAGE_WON } from './pipedrive.constants';
-import { orderMount } from './order-mount';
-import * as repository from './pipedrive.repository';
+import { orderMount } from './helpers/order-mount';
 import pipedriveClient from '../../core/clients-http/pipedrive.client';
+import orderRepository from '../order/order.repository';
 
 class PipedriveService {
   async createOrder(data) {
     try {
-      const existData = await repository.getById(data.id);
+      const existData = await orderRepository.getById(data.id);
 
       if (data.status !== STAGE_WON || existData) {
         exception.stageNotReached();
@@ -24,6 +24,7 @@ class PipedriveService {
 
       const builder = new OrderBuilder(payload);
 
+      builder.buildOrder();
       builder.buildClient();
       builder.buildItens();
 
@@ -31,41 +32,6 @@ class PipedriveService {
         orderBling: builder.order,
         orderStore: orderMount(payload),
       };
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  async registeOrder(order) {
-    try {
-      await repository.register(order);
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  async getById(id) {
-    try {
-      const { _id, ...restOfData } = await repository.getById(id);
-      return { ...restOfData, ..._id };
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  async update(id, data) {
-    try {
-      await repository.update(id, data);
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  async getOpportunities() {
-    try {
-      const [{ _id, ...restOfData }] = await repository.agregateOpportunities();
-
-      return { ...restOfData, ..._id };
     } catch (error) {
       throw error;
     }

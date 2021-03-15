@@ -2,7 +2,7 @@ import { Schedules } from './schedule';
 import { requestLimiter, promiseHandler } from '../../core/utils/utils';
 import pipedriveClient from '../../core/clients-http/pipedrive.client';
 import pipedriveService from '../../modules/pipedrive/pipedrive.service';
-import { AdapterJson } from '../../modules/pipedrive/adpter-json';
+import { AdapterJson } from '../../modules/pipedrive/helpers/adpter-json';
 import { NotifyOrder } from '../../modules/pipedrive/notify-order';
 
 export class PipedriveSchedule extends Schedules {

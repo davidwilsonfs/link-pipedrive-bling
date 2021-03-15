@@ -1,5 +1,5 @@
 import blingClient from '../../core/clients-http/bling.client';
-import PipedriveService from './pipedrive.service';
+import orderService from '../order/order.service';
 
 export class NotifyOrder {
   constructor(data, orderStore) {
@@ -12,7 +12,7 @@ export class NotifyOrder {
       .createOrder(this.data)
       .then(res => {
         if (!res.data.retorno.erros) {
-          PipedriveService.registeOrder(this.store);
+          orderService.registeOrder(this.store);
         } else {
           console.log(res.data.retorno.erros);
         }

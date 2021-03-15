@@ -15,6 +15,7 @@
   "author": "David Santos <dwfs@ci.ufpe.br>",
   "license": "ISC",
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@babel/plugin-transform-spread": "^7.12.1",
     "babel-eslint": "^10.1.0",
     "eslint": "^4.19.1",
