@@ -6,7 +6,7 @@ import InitServer from './bin/www';
 import InitSwagger from './config/boot/boot.swagger';
 import InitDatabase from './config/boot/boot.database';
 import ConfigApiRoutes from './config/boot/boot.routes';
-import { startSystem } from './config/boot/boot.start';
+import { startSchedules } from './config/boot/boot.schedules';
 import { initializerLogger } from './config/boot/boot.logger';
 import ConfigErrorHandler from './core/exceptions/handler.error';
 moment.locale('pt-br');
@@ -20,7 +20,7 @@ const server = InitServer(app);
 initializerLogger(app);
 InitSwagger(app);
 InitDatabase();
-startSystem();
+startSchedules();
 
 ConfigApiRoutes(app);
 ConfigErrorHandler(app);
