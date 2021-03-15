@@ -8,9 +8,9 @@ class OrderService {
       throw error;
     }
   }
-  async getById(id) {
+  async getByOrderId(order) {
     try {
-      const { _id, ...restOfData } = await repository.getById(id);
+      const { _id, ...restOfData } = await repository.getByOrderId(order);
       return { ...restOfData, ..._id };
     } catch (error) {
       throw error;

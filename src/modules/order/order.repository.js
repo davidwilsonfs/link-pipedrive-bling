@@ -13,18 +13,9 @@ class OrderRepository {
     }
   };
 
-  getById = async id => {
+  getByOrderId = async id => {
     try {
       return this.model.findOne({ order_id: id });
-    } catch (e) {
-      throw e;
-    }
-  };
-
-  update = async (id, data) => {
-    try {
-      const order = await this.model.findById({ _id: id });
-      return await order.update(data);
     } catch (e) {
       throw e;
     }

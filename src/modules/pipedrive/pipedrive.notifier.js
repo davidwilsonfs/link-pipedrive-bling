@@ -1,5 +1,5 @@
 import blingClient from '../../core/clients-http/bling.client';
-// import orderService from '../order/order.service';
+import { OrderMalformedError } from './pipedrive.exceptions';
 
 export class PipedriveNotifier {
   constructor(data) {
@@ -10,13 +10,11 @@ export class PipedriveNotifier {
     try {
       const { data } = await blingClient.createOrder(this.data);
 
-      //   if (res.data.retorno.erros) {
-      //     // orderMalformed;
-      //   }
-      // })
-      // .catch(err => {
-      //   console.log(err);
-      // });
+      if (data.retorno.erros) {
+        new OrderMalformedError();
+      }
+
+      return data;
     } catch (error) {
       throw error;
     }
