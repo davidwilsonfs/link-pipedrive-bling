@@ -18,7 +18,13 @@ class OrderService {
     }
   }
 
-  getAllOrders() {}
+  async getAllOrders(options) {
+    try {
+      return orderRepository.getAll(options);
+    } catch (error) {
+      throw error;
+    }
+  }
 
   async getOpportunities() {
     try {

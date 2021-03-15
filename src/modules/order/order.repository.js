@@ -4,6 +4,31 @@ class OrderRepository {
   constructor() {
     this.model = Order;
   }
+
+  getAll = async options => {
+    try {
+      const pageNumber = parseInt(options.page || 1, 10);
+      const resultsPerPage = parseInt(options.limit || 10, 10);
+      const skipDocuments = parseInt((pageNumber - 1) * resultsPerPage, 10);
+
+      let data = await this.model
+        .find({})
+        .sort({ created_at: -1 })
+        .skip(skipDocuments)
+        .limit(resultsPerPage)
+        .lean();
+
+      const values = await this.model.find().count();
+
+      const totalCount = values || 0;
+
+      const pageCount = Math.ceil(totalCount / resultsPerPage) || 1;
+
+      return { data, metadata: { pageCount, totalCount } };
+    } catch (e) {
+      throw e;
+    }
+  };
   register = async data => {
     try {
       const order = new this.model(data);

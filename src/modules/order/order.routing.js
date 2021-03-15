@@ -5,6 +5,35 @@ const ordersRouter = Router();
 
 /**
  * @swagger
+ * /orders:
+ *   get:
+ *     tags:
+ *       - Orders
+ *     summary: Return all orders
+ *     description: Return all orders by page and limit
+ *     security:
+ *       - BasicAuth: []
+ *     parameters:
+ *       - name: limit
+ *         description: quantity of docs by page
+ *         in: query
+ *         required: false
+ *         type: string
+ *       - name: page
+ *         description: docs page
+ *         in: query
+ *         required: false
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: list of all orders
+ *       401:
+ *         description: Unauthorized
+ */
+ordersRouter.get('/', authentication.basicAuthentication, orderController.getAll);
+
+/**
+ * @swagger
  * /orders/opportunities:
  *   get:
  *     tags:

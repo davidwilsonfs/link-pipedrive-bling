@@ -9,7 +9,7 @@ import orderService from '../order/order.service';
 export class PipedriveSchedule extends Schedules {
   constructor() {
     super();
-    this.cron = `*/40 * * * * *`;
+    this.cron = `*/10 * * * *`;
     this.messageSchedulle = "Scheduller work to collect pipedrive orders'";
   }
 
