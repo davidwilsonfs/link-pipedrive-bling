@@ -17,3 +17,11 @@ export const getById = async id => {
   }
 };
 
+export const update = async (id, data) => {
+  try {
+    const order = await Order.findById({ _id: id });
+    return await order.update(data);
+  } catch (e) {
+    throw e;
+  }
+};

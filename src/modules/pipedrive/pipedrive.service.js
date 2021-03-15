@@ -8,7 +8,12 @@ import * as repository from './pipedrive.repository';
 class PipedriveService {
   async createOrder(data) {
     try {
-      if (data.status !== STAGE_WON) {
+      const existData = await repository.getById(data.id);
+
+      if (existData && data.status !== STAGE_WON) {
+        await repository.update(existData.id, { status: data.status });
+        exception.stageUpdated();
+      } else if (data.status !== STAGE_WON || (existData && existData.status === STAGE_WON)) {
         exception.stageNotReached();
       }
 
@@ -25,7 +30,11 @@ class PipedriveService {
       builder.buildClient();
       builder.buildItens();
 
-      return { orderBling: builder.order, orderStore: orderMount(payload) };
+      return {
+        orderBling: builder.order,
+        orderStore: orderMount(payload),
+        isUpdate: existData && existData.status !== STAGE_WON,
+      };
     } catch (error) {
       throw error;
     }
@@ -34,6 +43,22 @@ class PipedriveService {
   async registeOrder(order) {
     try {
       await repository.register(order);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getById(id) {
+    try {
+      await repository.getById(id);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async update(id, data) {
+    try {
+      await repository.update(id, data);
     } catch (error) {
       throw error;
     }
