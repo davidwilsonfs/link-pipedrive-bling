@@ -53,9 +53,9 @@ Todos os scripts rodam com `npm run [script]`, por exemplo: `npm run dev`.
 
 Os scripts de execução estão todos no `package.json`. Para a aplicação se conectar ao banco de dados, é necessário a instalação do MongoDB.
 
-## Executando a aplicacao com o WEBSOCKET
+## Executando a aplicacao com o WEBHOOK
 
-Para poder receber os eventos via websocket, sugiro instalar o `ngrok` para pemitir que o localhost seja acessado publicamenta. Dessa forma, será necessário criar um novo websocket [[PipedriveDocs]](https://pipedrive.readme.io/docs/guide-for-webhooks) e configurar da seguinte maneira:
+Para poder receber os eventos via webhook, sugiro instalar o `ngrok` para pemitir que o localhost seja acessado publicamenta. Dessa forma, será necessário criar um novo websocket [[PipedriveDocs]](https://pipedrive.readme.io/docs/guide-for-webhooks) e configurar da seguinte maneira:
 
 - EVENT_ACTION: Escolher updated
 - EVENT_OBJECT: Escolher deal
